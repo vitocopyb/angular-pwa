@@ -1,5 +1,5 @@
-const CACHE_STATIC_NAME = 'static-v7';
-const CACHE_DYNAMIC_NAME = 'dynamic-v2';
+const CACHE_STATIC_NAME = 'static-v8';
+const CACHE_DYNAMIC_NAME = 'dynamic-v3';
 
 self.addEventListener('install', e => {
     // abre el cache y almacena los archivos
@@ -18,17 +18,27 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.filter(cacheName => {
-                    return cacheName.startsWith('static-') && cacheName != CACHE_STATIC_NAME;
-                }).map(cacheName => {
-                    return caches.delete(cacheName);
-                })
-            );
-        })
-    )
+    const activateStatic = caches.keys().then(cacheNames => {
+        return Promise.all(
+            cacheNames.filter(cacheName => {
+                return cacheName.startsWith('static-') && cacheName != CACHE_STATIC_NAME;
+            }).map(cacheName => {
+                return caches.delete(cacheName);
+            })
+        );
+    });
+
+    const activateDynamic = caches.keys().then(cacheNames => {
+        return Promise.all(
+            cacheNames.filter(cacheName => {
+                return cacheName.startsWith('dynamic-') && cacheName != CACHE_DYNAMIC_NAME;
+            }).map(cacheName => {
+                return caches.delete(cacheName);
+            })
+        );
+    });
+
+    event.waitUntil(Promise.all([activateStatic, activateDynamic]));
 });
 
 self.addEventListener('fetch', e => {
