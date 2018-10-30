@@ -1,11 +1,11 @@
-const CACHE_STATIC_NAME = 'static-v5';
+const CACHE_STATIC_NAME = 'static-v6';
 const CACHE_DYNAMIC_NAME = 'dynamic-v1';
 
 self.addEventListener('install', e => {
     // abre el cache y almacena los archivos
     const cacheProm = caches.open(CACHE_STATIC_NAME).then(cache => {
         return cache.addAll([
-            '/', // se incluye este path para que funcione la aplicacion en modo offline cuando se accede solo con el nomrbre del dominio, ej: localhost:8080 o localhost:8080/
+            './', // se incluye este path para que funcione la aplicacion en modo offline cuando se accede solo con el nomrbre del dominio, ej: localhost:8080 o localhost:8080/
             'index.html',
             'assets/img/1.jpg',
             'assets/img/2.jpg',
