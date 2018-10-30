@@ -8,6 +8,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1976d2">
 </head>
 
 <body>
@@ -16,6 +19,12 @@
     <script>
         if (navigator.serviceWorker) {
             navigator.serviceWorker.register('./sw.js').then(function (reg) {
+                // simularemos un posteo realizado offline
+                setTimeout(() => {
+                    // registra una tarea asincrona
+                    reg.sync.register('posteo-gatitos');
+                    console.log('Posteo-gatitos pendiente para ser sincronizado');
+                }, 3000);
 
                 if (reg.installing) {
                     console.log('Service worker installing');
@@ -23,6 +32,8 @@
                     console.log('Service worker installed');
                 } else if (reg.active) {
                     console.log('Service worker active');
+                } else if (reg.sync) {
+                    console.log('Network online');
                 }
 
             }).catch(function (error) {

@@ -8,6 +8,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1976d2">
 <link rel="stylesheet" href="styles.3ff695c00d717f2d2a11.css"></head>
 
 <body>
@@ -16,6 +19,12 @@
     <script>
         if (navigator.serviceWorker) {
             navigator.serviceWorker.register('./sw.js').then(function (reg) {
+                // simularemos un posteo realizado offline
+                setTimeout(() => {
+                    // registra una tarea asincrona
+                    reg.sync.register('posteo-gatitos');
+                    console.log('Posteo-gatitos pendiente para ser sincronizado');
+                }, 3000);
 
                 if (reg.installing) {
                     console.log('Service worker installing');
@@ -23,6 +32,8 @@
                     console.log('Service worker installed');
                 } else if (reg.active) {
                     console.log('Service worker active');
+                } else if (reg.sync) {
+                    console.log('Network online');
                 }
 
             }).catch(function (error) {
@@ -33,6 +44,6 @@
 
     </script>
 
-<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.7fb637d055581aa28d51.js"></script><script type="text/javascript" src="main.0f7c3764e94980497da9.js"></script></body>
+<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.7fb637d055581aa28d51.js"></script><script type="text/javascript" src="main.b512e287d592705ea932.js"></script></body>
 
 </html>

@@ -1,4 +1,4 @@
-const version = 11;
+const version = '13.5';
 const CACHE_STATIC_NAME = 'static-v' + version;
 const CACHE_DYNAMIC_NAME = 'dynamic-v' + version;
 
@@ -7,7 +7,7 @@ self.addEventListener('install', e => {
     const cacheProm = caches.open(CACHE_STATIC_NAME).then(cache => {
         return cache.addAll([
             './', // se incluye este path para que funcione la aplicacion en modo offline cuando se accede solo con el nomrbre del dominio, ej: localhost:8080 o localhost:8080/
-            'index.html',
+            './index.html',
             'assets/img/1.jpg',
             'assets/img/2.jpg',
             'assets/img/3.jpg',
@@ -68,7 +68,7 @@ self.addEventListener('fetch', e => {
 // --------------------------------------------------------------
 // SYNC: Recuperamos la conexion a internet
 self.addEventListener('sync', event => {
-    console.log('Tenemos conexion!');
+    console.log('Tenemos conexion, enviamos la informacion');
     console.log(event);
     console.log(event.tag);
 
