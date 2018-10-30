@@ -1,4 +1,4 @@
-const version = 10;
+const version = 11;
 const CACHE_STATIC_NAME = 'static-v' + version;
 const CACHE_DYNAMIC_NAME = 'dynamic-v' + version;
 
