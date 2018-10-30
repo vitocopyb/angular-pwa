@@ -1,5 +1,5 @@
-const CACHE_STATIC_NAME = 'static-v6';
-const CACHE_DYNAMIC_NAME = 'dynamic-v1';
+const CACHE_STATIC_NAME = 'static-v7';
+const CACHE_DYNAMIC_NAME = 'dynamic-v2';
 
 self.addEventListener('install', e => {
     // abre el cache y almacena los archivos
@@ -52,4 +52,13 @@ self.addEventListener('fetch', e => {
         });
     });
     e.respondWith(respuesta);
+});
+
+// --------------------------------------------------------------
+// SYNC: Recuperamos la conexion a internet
+self.addEventListener('sync', event => {
+    console.log('Tenemos conexion!');
+    console.log(event);
+    console.log(event.tag);
+
 });

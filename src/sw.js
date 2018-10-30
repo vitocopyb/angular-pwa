@@ -1,15 +1,15 @@
-const CACHE_STATIC_NAME = 'static-v3';
-const CACHE_DYNAMIC_NAME = 'dynamic-v1';
+const CACHE_STATIC_NAME = 'static-v7';
+const CACHE_DYNAMIC_NAME = 'dynamic-v2';
 
 self.addEventListener('install', e => {
     // abre el cache y almacena los archivos
     const cacheProm = caches.open(CACHE_STATIC_NAME).then(cache => {
         return cache.addAll([
-            '/', // se incluye este path para que funcione la aplicacion en modo offline cuando se accede solo con el nomrbre del dominio, ej: localhost:8080 o localhost:8080/
-            '/index.html',
-            '/assets/img/1.jpg',
-            '/assets/img/2.jpg',
-            '/assets/img/3.jpg',
+            './', // se incluye este path para que funcione la aplicacion en modo offline cuando se accede solo con el nomrbre del dominio, ej: localhost:8080 o localhost:8080/
+            'index.html',
+            'assets/img/1.jpg',
+            'assets/img/2.jpg',
+            'assets/img/3.jpg',
         ]);
     });
 
@@ -18,17 +18,17 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', event => {
-    // event.waitUntil(
-    //     caches.keys().then(cacheNames => {
-    //         return Promise.all(
-    //             cacheNames.filter(cacheName => {
-    //                 return cacheName.startsWith('static-') && cacheName != CACHE_STATIC_NAME;
-    //             }).map(cacheName => {
-    //                 return caches.delete(cacheName);
-    //             })
-    //         );
-    //     })
-    // )
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.filter(cacheName => {
+                    return cacheName.startsWith('static-') && cacheName != CACHE_STATIC_NAME;
+                }).map(cacheName => {
+                    return caches.delete(cacheName);
+                })
+            );
+        })
+    )
 });
 
 self.addEventListener('fetch', e => {
@@ -52,4 +52,13 @@ self.addEventListener('fetch', e => {
         });
     });
     e.respondWith(respuesta);
+});
+
+// --------------------------------------------------------------
+// SYNC: Recuperamos la conexion a internet
+self.addEventListener('sync', event => {
+    console.log('Tenemos conexion!');
+    console.log(event);
+    console.log(event.tag);
+
 });
