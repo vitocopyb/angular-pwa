@@ -1,5 +1,6 @@
-const CACHE_STATIC_NAME = 'static-v8';
-const CACHE_DYNAMIC_NAME = 'dynamic-v3';
+const version = 10;
+const CACHE_STATIC_NAME = 'static-v' + version;
+const CACHE_DYNAMIC_NAME = 'dynamic-v' + version;
 
 self.addEventListener('install', e => {
     // abre el cache y almacena los archivos
